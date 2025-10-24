@@ -1,0 +1,17 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robot_name">
+
+<link name="base_link">
+    
+</link>
+
+<joint name="base_TO_chasis" type="fixed">
+    <origin xyz="0.0 0.0 0.5" rpy="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="chasis"/>
+</joint>
+
+<link name="chasis">
+    
+</link>
+
+</robot>
