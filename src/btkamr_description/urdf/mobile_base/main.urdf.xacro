@@ -6,7 +6,7 @@
 <xacro:property name="chasis_len_y" value="0.4"/>
 <xacro:property name="chasis_len_z" value="0.2"/>
 <xacro:property name="base_chasis_offset" value="0.08"/>
-
+<xacro:property name="chasis_mass" value="2.0"/>
 
 <xacro:include filename="../common_props.xacro"/>
 <xacro:include filename="./wheels.urdf.xacro"/>
@@ -21,14 +21,16 @@
     <child link="chasis"/>
 </joint>
 
-<link name="chasis">
-    <visual>
-        <geometry>
-            <box size="${chasis_len_x} ${chasis_len_y} ${chasis_len_z}"/>
-        </geometry>
-        <material name="green"/>
-    </visual>
-</link>
+<xacro:create_box_link 
+    name="chasis"
+    oxyz="0.0 0.0 0.0"
+    orpy="0.0 0.0 0.0"
+    lenx="${chasis_len_x}"
+    leny="${chasis_len_y}"
+    lenz="${chasis_len_z}"
+    mass="${chasis_mass}"
+    material="green"
+/>
 
 <link name="base_footprint"/>
 
