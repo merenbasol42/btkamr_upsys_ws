@@ -8,6 +8,7 @@
 <xacro:property name="base_chasis_offset" value="0.08"/>
 
 
+<xacro:include filename="../common_props.xacro"/>
 <xacro:include filename="./wheels.urdf.xacro"/>
 
 
@@ -25,6 +26,7 @@
         <geometry>
             <box size="${chasis_len_x} ${chasis_len_y} ${chasis_len_z}"/>
         </geometry>
+        <material name="green"/>
     </visual>
 </link>
 
