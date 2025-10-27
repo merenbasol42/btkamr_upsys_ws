@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="btkamr">
+
+
+<xacro:property name="chasis_l_x" value="0.6"/>
+<xacro:property name="chasis_l_y" value="0.4"/>
+<xacro:property name="chasis_l_z" value="0.2"/>
+
+
+
+<xacro:include filename="./wheels.urdf.xacro"/>
+
+
+
+<link name="base_link"/>
+
+<joint name="base_TO_chasis" type="fixed">
+    <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="chasis"/>
+</joint>
+
+<link name="chasis">
+    <visual>
+        <geometry>
+            <box size="${chasis_l_x} ${chasis_l_y} ${chasis_l_z}"/>
+        </geometry>
+    </visual>
+</link>
+
+
+
+
+</robot>

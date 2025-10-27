@@ -1,0 +1,45 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="btkamr">
+    
+    <xacro:property name="wh_radius" value="0.1"/>
+    <xacro:property name="wh_thick" value="0.04"/>
+    <xacro:property name="wh_chasis_gap" value="0.001"/>
+
+
+
+    <joint name="base_TO_wh_l" type="continuous">
+        <origin xyz="0.0 ${chasis_l_y / 2.0 + wh_thick + wh_chasis_gap} 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="wh_l"/>
+        <axis xyz="0.0 1.0 0.0"/>
+        <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+    </joint>
+
+    <link name="wh_l">
+        <visual>
+            <origin rpy="${pi / 2.0} 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${wh_radius}" length="${wh_thick}"/>
+            </geometry>        
+        </visual>
+    </link>
+
+
+
+    <joint name="base_TO_wh_r" type="continuous">
+        <origin xyz="0.0 ${-1 * (chasis_l_y / 2.0 + wh_thick + wh_chasis_gap)} 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="wh_r"/>
+        <axis xyz="0.0 1.0 0.0"/>
+        <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+    </joint>
+
+    <link name="wh_r">
+        <visual>
+            <origin rpy="${pi / 2.0} 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="${wh_radius}" length="${wh_thick}"/>
+            </geometry>        
+        </visual>
+    </link>
+
+</robot>

@@ -6,13 +6,11 @@ from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
 PKG_NAME: str = "btkamr_description"
-URDF_NAME: str = "mobile_base.urdf.xacro"
-RVIZ_CFG_NAME: str = "mobile_base_cfg.rviz"
 
 def generate_launch_description():
     pkg_share = get_package_share_directory(PKG_NAME)
-    urdf_path = os.path.join(pkg_share, "urdf", URDF_NAME)
-    rviz_cfg_path = os.path.join(pkg_share, "rviz", RVIZ_CFG_NAME)
+    urdf_path = os.path.join(pkg_share, "urdf", "mobile_base/main.urdf.xacro")
+    rviz_cfg_path = os.path.join(pkg_share, "rviz", "mobile_base_cfg.rviz")
     robot_desc = ParameterValue(Command(["xacro ", urdf_path]), value_type=str) # boşluk önemli xacro' '
 
     return LaunchDescription([
