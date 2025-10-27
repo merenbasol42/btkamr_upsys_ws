@@ -32,8 +32,6 @@
 
     </xacro:macro>
 
-
-
     <xacro:create_wh postfix="l" yfact="1.0"/>
     <xacro:create_wh postfix="r" yfact="-1.0"/>
     
