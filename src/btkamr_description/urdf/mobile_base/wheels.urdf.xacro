@@ -1,45 +1,68 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="btkamr">
-    
+
     <xacro:property name="wh_radius" value="0.1"/>
     <xacro:property name="wh_thick" value="0.04"/>
     <xacro:property name="wh_chasis_gap" value="0.001"/>
 
+    <xacro:property name="cwh_radius" value="${(wh_radius - (chasis_len_z / 2.0 - base_chasis_offset)) / 2.0}"/>
+    <xacro:property name="cwh_chasis_offset" value="0.1"/>
 
 
-    <joint name="base_TO_wh_l" type="continuous">
-        <origin xyz="0.0 ${chasis_l_y / 2.0 + wh_thick + wh_chasis_gap} 0.0" rpy="0.0 0.0 0.0"/>
-        <parent link="base_link"/>
-        <child link="wh_l"/>
-        <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
-    </joint>
+    <!-- Wheels -->
 
-    <link name="wh_l">
-        <visual>
-            <origin rpy="${pi / 2.0} 0.0 0.0"/>
-            <geometry>
-                <cylinder radius="${wh_radius}" length="${wh_thick}"/>
-            </geometry>        
-        </visual>
-    </link>
+    <xacro:macro name="create_wh" params="postfix yfact">
+
+        <joint name="base_TO_wh_${postfix}" type="continuous">
+            <origin xyz="0.0 ${yfact * (chasis_len_y / 2.0 + wh_thick + wh_chasis_gap)} 0.0" rpy="0.0 0.0 0.0"/>
+            <parent link="base_link"/>
+            <child link="wh_${postfix}"/>
+            <axis xyz="0.0 1.0 0.0"/>
+            <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+        </joint>
+
+        <link name="wh_${postfix}">
+            <visual>
+                <origin rpy="${pi / 2.0} 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="${wh_radius}" length="${wh_thick}"/>
+                </geometry>
+            </visual>
+        </link>
+
+    </xacro:macro>
 
 
 
-    <joint name="base_TO_wh_r" type="continuous">
-        <origin xyz="0.0 ${-1 * (chasis_l_y / 2.0 + wh_thick + wh_chasis_gap)} 0.0" rpy="0.0 0.0 0.0"/>
-        <parent link="base_link"/>
-        <child link="wh_r"/>
-        <axis xyz="0.0 1.0 0.0"/>
-        <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
-    </joint>
+    <xacro:create_wh postfix="l" yfact="1.0"/>
+    <xacro:create_wh postfix="r" yfact="-1.0"/>
+    
 
-    <link name="wh_r">
-        <visual>
-            <origin rpy="${pi / 2.0} 0.0 0.0"/>
-            <geometry>
-                <cylinder radius="${wh_radius}" length="${wh_thick}"/>
-            </geometry>        
-        </visual>
-    </link>
+
+    <!-- Caster Wheels -->
+
+    <xacro:macro name="create_cwh" params="postfix xfact yfact">
+            
+        <joint name="chasis_TO_cwh_${postfix}" type="continuous">
+            <origin xyz="${xfact * (chasis_len_x / 2.0 - cwh_chasis_offset)} ${yfact * (chasis_len_y / 2.0 - cwh_chasis_offset)} ${-1 * (chasis_len_z / 2.0 + cwh_radius)}" rpy="0.0 0.0 0.0"/>
+            <parent link="chasis"/>
+            <child link="cwh_${postfix}"/>
+            <axis xyz="0.0 1.0 0.0"/>
+        </joint>
+
+        <link name="cwh_${postfix}">
+            <visual>
+                <geometry>
+                    <sphere radius="${cwh_radius}"/>
+                </geometry>
+            </visual>
+        </link>
+
+    </xacro:macro>
+
+    <xacro:create_cwh postfix="lf" xfact="1.0" yfact="1.0"/>
+    <xacro:create_cwh postfix="lb" xfact="-1.0" yfact="1.0"/>
+    <xacro:create_cwh postfix="rf" xfact="1.0" yfact="-1.0"/>
+    <xacro:create_cwh postfix="rb" xfact="-1.0" yfact="-1.0"/>
+
 
 </robot>

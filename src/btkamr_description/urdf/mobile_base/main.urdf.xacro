@@ -2,10 +2,10 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="btkamr">
 
 
-<xacro:property name="chasis_l_x" value="0.6"/>
-<xacro:property name="chasis_l_y" value="0.4"/>
-<xacro:property name="chasis_l_z" value="0.2"/>
-
+<xacro:property name="chasis_len_x" value="0.6"/>
+<xacro:property name="chasis_len_y" value="0.4"/>
+<xacro:property name="chasis_len_z" value="0.2"/>
+<xacro:property name="base_chasis_offset" value="0.08"/>
 
 
 <xacro:include filename="./wheels.urdf.xacro"/>
@@ -15,7 +15,7 @@
 <link name="base_link"/>
 
 <joint name="base_TO_chasis" type="fixed">
-    <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
+    <origin xyz="0.0 0.0 ${base_chasis_offset}" rpy="0.0 0.0 0.0"/>
     <parent link="base_link"/>
     <child link="chasis"/>
 </joint>
@@ -23,12 +23,18 @@
 <link name="chasis">
     <visual>
         <geometry>
-            <box size="${chasis_l_x} ${chasis_l_y} ${chasis_l_z}"/>
+            <box size="${chasis_len_x} ${chasis_len_y} ${chasis_len_z}"/>
         </geometry>
     </visual>
 </link>
 
+<link name="base_footprint"/>
 
+<joint name="base_TO_footprint" type="fixed">
+    <origin xyz="0.0 0.0 ${wh_radius}" rpy="0.0 0.0 0.0"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+</joint>
 
 
 </robot>
