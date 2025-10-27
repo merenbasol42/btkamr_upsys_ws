@@ -5,29 +5,33 @@ from launch.substitutions import Command
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
-PKG_NAME: str = 'btkamr_description'
+PKG_NAME: str = "btkamr_description"
+URDF_NAME: str = "mobile_base.urdf.xacro"
+RVIZ_CFG_NAME: str = "mobile_base_cfg.rviz"
 
 def generate_launch_description():
     pkg_share = get_package_share_directory(PKG_NAME)
-    urdf_path = os.path.join(pkg_share, 'urdf', 'mobile_base.urdf.xacro')
-    robot_desc = ParameterValue(Command(['xacro ', urdf_path]), value_type = str)
-    
+    urdf_path = os.path.join(pkg_share, "urdf", URDF_NAME)
+    rviz_cfg_path = os.path.join(pkg_share, "rviz", RVIZ_CFG_NAME)
+    robot_desc = ParameterValue(Command(["xacro ", urdf_path]), value_type=str) # boşluk önemli xacro' '
+
     return LaunchDescription([
         Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            name='robot_state_publisher',
-            output='screen',
-            parameters=[{'robot_description': robot_desc}]
+            package="robot_state_publisher",
+            executable="robot_state_publisher",
+            name="robot_state_publisher",
+            output="screen",
+            parameters=[{"robot_description": robot_desc}]
         ),
         Node(
             package="joint_state_publisher_gui",
             executable="joint_state_publisher_gui"
         ),
         Node(
-            package='rviz2',
-            executable='rviz2',
-            name='rviz2',
-            output='screen'
+            package="rviz2",
+            executable="rviz2",
+            name="rviz2",
+            output="screen",
+            arguments=['-d', rviz_cfg_path]
         ),
     ])
