@@ -8,7 +8,7 @@
 <xacro:property name="base_chasis_offset" value="0.08"/>
 <xacro:property name="chasis_mass" value="2.0"/>
 
-<xacro:include filename="../common_props.xacro"/>
+<xacro:include filename="../common.xacro"/>
 <xacro:include filename="./wheels.urdf.xacro"/>
 
 
